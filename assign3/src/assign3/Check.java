@@ -1,17 +1,31 @@
 package assign3;
 
+/**
+ * One instance is created per transaction and the stored in the ChecksToClear
+ * class. Only contains getters and setters for the check's inmformation
+ * 
+ * @author tyjshuman
+ *
+ */
 public class Check {
-	private int amount;
+	private double amount;
 	private String from;
 	private String to;
 	private int routingNumber;
 	private int accountNumber;
 
-	public int getAmount() {
+	public Check(double amount, int accountNumber, int routingNumber, String to) {
+		this.amount = amount;
+		this.accountNumber = accountNumber;
+		this.routingNumber = routingNumber;
+		this.to = to;
+	}
+
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 

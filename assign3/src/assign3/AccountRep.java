@@ -1,5 +1,5 @@
 package assign3;
 
-public class AccountRep {
-	
+public class AccountRep extends BankEmployee {
+
 }

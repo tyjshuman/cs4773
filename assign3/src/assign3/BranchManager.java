@@ -1,5 +1,5 @@
 package assign3;
 
-public class BranchManager {
+public class BranchManager extends BankEmployee {
 
 }
