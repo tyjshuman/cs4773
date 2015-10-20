@@ -88,8 +88,9 @@ public class Account {
 	public void applyTransaction(String type, Transaction t) {
 		if (type.equals("deposit"))
 			balance += t.getAmount();
-		if (type.equals("withdraw"))
+		if (type.equals("withdraw")) {
 			balance -= t.getAmount();
+		}
 	}
 
 }

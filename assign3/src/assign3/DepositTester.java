@@ -66,12 +66,12 @@ public class DepositTester {
 		fillProfilesAndAccounts(c);
 		printMemberInfo(c);
 
-		c.readCheckDeposit("text");
-		printMemberInfo(c);
+		// c.readCheckDeposit("text");
+		// printMemberInfo(c);
 		// c.readCheckDeposit("image", "SampleImage1.png");
 		// printMemberInfo(c);
-		// c.readCheckDeposit("pdf", "SamplePDF1.pdf");
-		// printMemberInfo(c);
+		c.readCheckDeposit("pdf", "SamplePDF1.pdf");
+		printMemberInfo(c);
 	}
 
 	// Since we are not worried about a database (yet) you can simply

@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/tyjshuman/Downloads/pdfbox-app-2.0.0-RC1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/qfs045/Downloads/pdfbox-app-2.0.0-RC1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/qfs045/Downloads/asprise-imaging-scan-11-eval/asprise-imaging-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/qfs045/Downloads/asprise-imaging-scan-11-eval.zip"/>
+	<classpathentry kind="lib" path="C:/Users/qfs045/Downloads/asprise-imaging-scan-11-eval/asprise-imaging-ui.jar"/>
+	<classpathentry kind="lib" path="C:/Users/qfs045/Downloads/asprise-ocr-java-15.3.1-trial-windows/aocr.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

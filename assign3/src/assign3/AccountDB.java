@@ -54,9 +54,9 @@ public class AccountDB {
 	 */
 	public void applyTransaction(Transaction t) {
 		for (Account a : accounts) {
-			if (a.getOwnerID() == t.getFrom())
+			if (a.getID() == t.getFrom()) {
 				a.applyTransaction("withdraw", t);
-			else if (a.getOwnerName().equals(t.getToAccount())) {
+			} else if (a.getOwnerName().equals(t.getToAccount())) {
 				a.applyTransaction("deposit", t);
 			}
 		}

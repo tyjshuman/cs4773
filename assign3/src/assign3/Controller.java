@@ -1,7 +1,17 @@
 package assign3;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
+import com.asprise.ocr.Ocr;
 
 /**
  * This is the CREATOR and CONTROLLER class of my project. It is responsible for
@@ -116,8 +126,70 @@ public class Controller {
 		accountDB.applyTransaction(t);
 	}
 
+	/**
+	 * PDF must be in the format of
+	 * "amount:accountNumber:routingNumber:recipientName"
+	 * 
+	 * @param medium
+	 * @param file
+	 */
 	public void readCheckDeposit(String medium, String file) {
-		transactionDB.incrementTransactionID();
+		double amount = 0;
+		int accountNumber = 0;
+		int routingNumber = 0;
+		String recipientName = "";
+		String checkInput = "";
+		if (medium.equals("pdf")) {
+			PDDocument pd;
+			BufferedWriter wr;
+			File output = null;
+			try {
+				File input = new File(file);
+				output = new File("storeCheckPDF.txt");
+
+				pd = PDDocument.load(input);
+				PDFTextStripper stripper = new PDFTextStripper();
+				stripper.setStartPage(1);
+				stripper.setEndPage(2);
+
+				wr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
+				stripper.writeText(pd, wr);
+				if (pd != null) {
+					pd.close();
+				}
+				wr.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Scanner fileIn = null;
+			try {
+				fileIn = new Scanner(output);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			while (fileIn.hasNextLine()) {
+				checkInput += fileIn.nextLine();
+			}
+		} else if (medium.equals("image")) {
+			Ocr.setUp();
+			Ocr ocr = new Ocr();
+			ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+			checkInput = ocr.recognize(new File[] { new File("SampleImage1.png") }, Ocr.RECOGNIZE_TYPE_ALL,
+					Ocr.OUTPUT_FORMAT_PLAINTEXT);
+		}
+
+		amount = Double.parseDouble(checkInput.substring(0, checkInput.indexOf(":")));
+		checkInput = checkInput.substring(checkInput.indexOf(":") + 1);
+		accountNumber = Integer.parseInt(checkInput.substring(0, checkInput.indexOf(":")));
+		checkInput = checkInput.substring(checkInput.indexOf(":") + 1);
+		routingNumber = Integer.parseInt(checkInput.substring(0, checkInput.indexOf(":")));
+		checkInput = checkInput.substring(checkInput.indexOf(":") + 1);
+		recipientName = checkInput;
+
+		Check check = new Check(amount, accountNumber, routingNumber, recipientName);
+		Transaction t = transactionController.newCheck(check);
+		transactionDB.newTransaction(t);
+		accountDB.applyTransaction(t);
 	}
 
 	public void addMember(String fName, String mName, String lName, int memberID) {
@@ -141,16 +213,14 @@ public class Controller {
 
 	public void addAccount(int accountNumber, int routingNumber, double initialBalance, int memberID) {
 		Account account = new Account(accountNumber, routingNumber, initialBalance, memberID);
-		Member member = memberDB.getMember(memberID);
-		member.addAccount(accountNumber);
+		memberDB.getMember(memberID).addAccount(accountNumber);
 		account.setFullName(memberDB.getMember(memberID).getFullName());
 		accountDB.addAccount(account);
 	}
 
 	public void addAccount(int accountNumber, int routingNumber, double initialBalance, String memberFullName) {
 		Account account = new Account(accountNumber, routingNumber, initialBalance, memberFullName);
-		Member member = memberDB.getMember(memberFullName);
-		member.addAccount(accountNumber);
+		memberDB.getMember(memberFullName).addAccount(accountNumber);
 		account.setFullName(memberFullName);
 		accountDB.addAccount(account);
 	}
