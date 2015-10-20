@@ -176,6 +176,10 @@ public class Controller {
 			ocr.startEngine("eng", Ocr.SPEED_FASTEST);
 			checkInput = ocr.recognize(new File[] { new File("SampleImage1.png") }, Ocr.RECOGNIZE_TYPE_ALL,
 					Ocr.OUTPUT_FORMAT_PLAINTEXT);
+
+			checkInput = checkInput.substring(checkInput.indexOf("$") + 1, checkInput.indexOf(".") + 3)
+					+ checkInput.substring(checkInput.indexOf(":"), checkInput.length() - 1) + ":"
+					+ checkInput.substring(20, checkInput.indexOf("$") - 1);
 		}
 
 		amount = Double.parseDouble(checkInput.substring(0, checkInput.indexOf(":")));
