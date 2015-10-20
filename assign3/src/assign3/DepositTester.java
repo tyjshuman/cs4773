@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.apache.pdfbox.text.PDFTextStripper;
 
+/**
+ * ALL THAT WORKS IS THE TEXT INPUT, NOTHING ELSE.
+ *
+ */
 public class DepositTester {
 
 	// Tests each of the 3 Adapters for
